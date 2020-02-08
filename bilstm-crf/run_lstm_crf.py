@@ -10,7 +10,6 @@ from dataset_loader import BatchManager
 from model import NERModel
 import numpy as np
 from ner_metrics import SeqEntityScore
-from lr_scheduler import ReduceLROnPlateau
 from utils_ner import get_entities
 import json
 
@@ -58,12 +57,10 @@ def train(args,NERModel,processor):
     with tf.Session(config=tf_config) as sess:
         model = create_model(sess,NERModel, args.output_dir, config,logger)
         logger.info("start training")
-        # scheduler = ReduceLROnPlateau(model, mode='max', factor=0.5, patience=3,
-                                      # verbose=1, epsilon=1e-4, cooldown=0, min_lr=0, eps=1e-8)
         best_f1 = 0
         for epoch in range(1,1+args.epochs):
             train_manager.reset()
-            # model.opt=tf.train.AdamOptimizer(model.lr)
+            
             for batch in train_manager.iter_batch(shuffle=True):
                 step, batch_loss= model.run_step(sess, True, batch)
                 loss.append(batch_loss)
