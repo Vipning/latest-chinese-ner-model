@@ -163,9 +163,9 @@ def predict(args,processor):
             aux_sentence = [train_data[i] for i in test_train[step][:args.aug_num]]
             for s in aux_sentence:
                 a_input_ids.append(s['input_ids'])
-                a_label_ids.append(s['label_ids'])
+#                 a_label_ids.append(s['label_ids'])
                 #地址信息增强，将所有的标签信息改成adress标签，全1
-                #a_label_ids.append(s['input_mask'])
+                a_label_ids.append(s['input_mask'])
                 a_input_mask.append(s['input_mask'])
                 a_input_lens.append(s['input_len'])
                 a_segment_ids.append(s['segment_ids'])
